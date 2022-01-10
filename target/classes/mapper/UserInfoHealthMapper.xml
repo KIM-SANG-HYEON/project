@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace ="healthDao">
+
+	<resultMap type="health" id="health">
+		<result column="Health_IDX" property="healthIdx"/>
+		<result column="USER_IDX" property="userIdx"/>
+		<result column="USER_BLOODTYPE" property="userBloodtype"/>
+		<result column="USER_HEIGHT" property="userHeight"/>
+		<result column="USER_EYESIGHT_LEFT" property="userEyesightLeft"/>
+		<result column="USER_EYESIGHT_RIGHT" property="userEyesightRight"/>
+		<result column="USER_WEIGHT" property="userWeight"/>
+		<result column="USER_HOBBY" property="userHobby"/>
+		<result column="USER_SPECIALITY" property="userSpeciality"/>
+	</resultMap>  
+
+	 <insert id="insert" useGeneratedKeys="true" keyProperty="healthIdx" parameterType="hashmap">
+		<selectKey keyProperty="healthIdx" resultType="Integer" order="BEFORE">
+			select user_info_health_seq.nextval from dual
+	 	</selectKey>
+	 		insert into 
+			user_info_${tbName}
+		values
+		(
+			#{healthIdx}
+			,#{userIdx}
+			,#{userBloodtype}
+			,#{userHeight}
+			,#{userEyesightLeft}
+			,#{userEyesightRight}
+			,#{userWeight}
+			,#{userHobby}
+			,#{userSpeciality}
+		)
+	 </insert>
+	 
+	 <select id="list" resultType="health">
+	 	SELECT 
+	 		HEALTH_IDX as healthIdx,
+	 		USER_IDX as userIdx,
+	 		USER_BLOODTYPE as userBloodtype,
+	 		USER_HEIGHT as userHeight,
+	 		USER_EYESIGHT_LEFT as userEyesightLeft,
+	 		USER_EYESIGHT_RIGHT as userEyesightRight,
+	 		USER_WEIGHT as userWeight,
+	 		USER_HOBBY as userHobby,
+	 		USER_SPECIALITY as userSpeciality
+	 	FROM 
+	 		user_info_health
+	 	WHERE
+	 		user_idx=#{intUserIdx}
+	 </select>
+	
+</mapper>
